@@ -23,51 +23,61 @@ public class Main {
         OutputStream outputStream = System.out;
         InputReader in = new InputReader(inputStream);
         OutputWriter out = new OutputWriter(outputStream);
-        TaskA solver = new TaskA();
+        TaskB solver = new TaskB();
         solver.solve(1, in, out);
         out.close();
     }
 
-    static class TaskA {
+    static class TaskB {
         public void solve(int testNumber, InputReader in, OutputWriter out) {
             int total_test = in.nextInt();
-            int count = 0, flag = 0, num = 0, ncount = 0;
             for (int i = 0; i < total_test; i++) {
-                flag = 0;
-                num = in.nextInt();
-                int dnum = num;
-                while (dnum != 0) {
-                    int ans = dnum % 10;
-                    dnum = dnum / 10;
-                    if (ans != 0)
-                        ncount++;
-                }
-                System.out.println(ncount);
-                ncount = 0;
-                while (num != 0) {
-                    flag++;
-                    int ans = num % 10;
-                    num = num / 10;
+                int n = in.nextInt();
+                int k = in.nextInt();
+                if (n < k) {
+                    System.out.println("NO");
+                } else if (n % 2 == 1 && k % 2 == 0) {
+                    System.out.println("NO");
+                } else {
+                    int ans = n / k;
                     if (ans == 0) {
-                        count++;
-                        continue;
-                    }
-                    if (count == 0 && flag == 1)
-                        System.out.print(ans + " ");
-                    else if (count == 0 && flag != 1) {
-                        for (int k = 0; k < flag - 1; k++) {
-                            ans = ans * 10;
+                        System.out.println("YES");
+                        for (int l = 0; l < k; l++) {
+                            System.out.print(ans + " ");
                         }
-                        System.out.print(ans + " ");
+                        System.out.println();
                     } else {
-                        for (int j = 0; j < flag - 1; j++) {
-                            ans = ans * 10;
+                        int que = n % k;
+                        int one_ans = que + ans;
+                        if (ans == 1 && one_ans % 2 == 0) {
+                            System.out.println("NO");
+                        } else if (ans == 1 && one_ans % 2 == 1) {
+                            System.out.println("YES");
+                            System.out.print(one_ans + " ");
+                            for (int j = 0; j < k - 1; j++) {
+                                System.out.print(ans + " ");
+                            }
+                            System.out.println();
+                        } else if (one_ans % 2 == ans % 2) {
+                            System.out.println("YES");
+                            System.out.print(one_ans + " ");
+                            for (int j = 0; j < k - 1; j++) {
+                                System.out.print(ans + " ");
+                            }
+                            System.out.println();
+                        } else if ((k - 1) % 2 == 1 && ans % 2 == 1) {
+                            System.out.println("NO");
+                        } else {
+                            System.out.println("YES");
+                            System.out.print(one_ans + " ");
+                            for (int m = 0; m < (k - 1) / 2; m++) {
+                                System.out.print((ans - 1) + " ");
+                                System.out.print((ans + 1) + " ");
+                            }
+                            System.out.println();
                         }
-                        System.out.print((ans + " "));
-                        count = 0;
                     }
                 }
-                System.out.println();
             }
         }
 
